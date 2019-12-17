@@ -32,7 +32,12 @@ After the game ends, the user can save their initials and score to a highscores 
 
 
 
+
+
+
+
 Instructions:
+
 From scratch, build a timer-based quiz application that stores high scores client-side. Following the common templates for user stories, we can frame this challenge as follows:
 As a coding bootcamp student
 I want to take a timed quiz on JavaScript fundamentals that stores high scores
