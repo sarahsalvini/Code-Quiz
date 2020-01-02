@@ -34,6 +34,7 @@ var indexQandA = 0;
 $("#startBtn").on("click", function () {
     $("#startText").remove();
     loadQandA();
+    setTimer();
 });
 
 function loadQandA() {
@@ -42,8 +43,57 @@ function loadQandA() {
     $(".question").html(question);
     for (var i=0; i < 4; i++) {
         var answer = questions[indexQandA].choices[i];
-        $(".answers").append('<h4 class= "btn btn-info" id=' + i + '>' + answer + '</h4><br>');
+        $(".answers").append('<h4 class= "btn btn-info" id=' + answer + '>' + answer + '</h4><br>');
     }
+}
+
+$("h4").click(function () {
+  var id = $(this).attr("id");
+  if (id === answer) {
+    answered = true;
+    $(".question").text("Correct");
+    correctAnswer();
+  } else {
+    answered = true; 
+    $(".question").text("Wrong Answer");
+    incorrectAnswer();
+  }
+});
+
+
+
+function correctAnswer() {
+  resetRound();
+}
+
+function incorrectAnswer() {
+  resetRound();
+  // lower timer by 10 
+}
+
+
+
+function resetRound(){
+  indexQandA++;
+  $(".btn-info").remove();
+  if (indexQandA < questions.length) {
+    loadQandA();
+  } else {
+    // submit high score button
+  }
+}
+
+
+function setTimer() {
+  $("#secondsLeft").text(time);
+var countdown = setInterval(function() {
+  time--;
+  $("#secondsLeft").text(time);
+  if (time <=0) {
+    clearInterval(countdown);
+  }
+}, 1000);
+
 }
 
 })
