@@ -11,14 +11,28 @@
     <div class="card" style="max-width: 50%; margin: 30px auto; margin-top: 70px;">
         <div class="card-body">
           <button type="button" class="btn btn-light" id="highScore" style="float: left;">High Scores</button>
-          <button type="button" class="btn btn-light" id="timer" style="float: right;">Time Left</button>
+          <button type="button" class="btn btn-light" id="timer" style="float: right;">Time Left</button>        
+        </div>
+
+        <div class="score">
+          <ul id="high-score"></ul>
+        </div>
+        <form class="show-onclick" id="form">
+        </form>
+        <div class="empty">
+        <h2 class="question text-center"></h2>
+        <div class="answers"></div>
+        <div class="text-center" id="startText">
+          <h1 class="card-title">Code Quiz</h1>
           <br>
-          <br>
-          <h5 class="card-title">Code Quiz</h5>
           <p class="card-text">Want to test your knowledge of a specific language or topic? Give our coding quiz a try!</p>
+          <br>
           <button type="button" class="btn btn-info" id="startBtn">Start Code Quiz</button>
+        </div>
         </div>
       </div>
   
+
+  <script src="assets/script.js"></script>
   </body>
 </html>
