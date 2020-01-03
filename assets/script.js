@@ -1,176 +1,184 @@
 $(document).ready(function(){
 
-
-var indexQandA = 0;
-var questions = [
-    {
-      title: "Commonly used data types DO NOT include:",
-      choices: ["strings", "booleans", "alerts", "numbers"],
-      answer: "alerts"
-    },
-    {
-      title: "How do you write “Hello World” in an alert box?",
-      choices: ["msgBox(“Hello World”);", "alert(“Hello World”);", "alertBox(“Hello World”);", "msg(“Hello World”);"],
-      answer: "alert(“Hello World”);"
-    },
-    {
-      title: "How to write an IF statement in JavaScript?",
-      choices: ["if i == 5 then", "if i = 5", "if i = 5 then", "if (i==5)"],
-      answer: "if (i==5)"
-    },
-    {
-      title: "What is the correct way to write a JavaScript array?",
-      choices: ["var colors = (1:”red”, 2:”green”, 3:”blue”)", "var colors = “red”, “green”, “blue”", "var colors = [“red”, ”green”, “blue”]", "var colors = 1=(“red”), 2=(“green), 3=(“blue”)"],
-      answer: "var colors = [“red”, ”green”, “blue”]"
-    },
-    {
-      title: "How do you round the number 7.25, to the nearest integer?",
-      choices: ["Math.round(7.25)", "Math.rnd(7.25)", "round(7.25)", "rnd(7.25)"],
-      answer: "Math.round(7.25)"
-    },
+  var indexQandA = 0;
+  var questions = [
+      {
+        title: "A very useful tool used during debuggingfor printing content to the debugger is:",
+        choices: ["JavaScript", "terminal/ bash", "for loops", "console.log"],
+        answer: "console.log"
+      },
+      {
+        title: "String values must be enclosed within _____ when being assigned to variables.",
+        choices: ["commas", "curly brackets", "quotes", "parentheses"],
+        answer: "quotes"
+      },
+      {
+        title: "Arrays in JavaScript can be used to store _________",
+        choices: ["numbers and strings", "other arrays", "booleans", "all-of-the-above"],
+        answer: "all-of-the-above"
+      },
+      {
+        title: "The condition in an if / else statement is enclosed within ____.",
+        choices: ["quotes", "curly brackets", "parentheses", "square brackets"],
+        answer: "parentheses"
+      },
+      {
+        title: "Commonly used data types DO NOT include:",
+        choices: ["strings", "booleans", "alerts", "numbers"],
+        answer: "alerts"
+      },
   ]
 
-  var secondsLeft = (questions.length) * 15;
-  var highScoreList = document.querySelector("#high-score");
-  var highScoreForm = document.querySelector(".show-onclick");
-
-
-
-
-$("#start").on("click", function () {
-    $('#startText').remove();
-    loadQandA();
-    setTimer();
-});
-
-$("#highScores").on("click", function() {
-  console.log("Hello");
-  $('.show.onclick').empty();
-  $('.empty').empty();
-  init()
-  scores();
-});
-
-
-function scores(){
-  $('.empty').empty();
-  $('.show-onclick').empty();
-  $('.show-onclick').append('<button type="button" class="btn btn-info" id= "clear" style = "float:left;">Clear High Scores</button><button type="button" class="btn btn-info" id= "restart" style= "float:right;">Restart</button>');
+  var timeLeft = (questions.length) * 15;
+  var scoreList = document.querySelector("#high-score");
+  var highScores = ["AAG : 70", "JPG : 54", "KMG : 65"];
+  var scoreForm = document.querySelector(".show-onclick");
   
-  $("#restart").click(function () {
-    location.reload();
+  
+  
+  $("#start").on("click", function () {
+      $('#startText').remove();
+      loadQandA();
+      setTimer();
   });
   
-  $("#clear").on("click", function () {
-    console.log("World");
-    highScores = [];
-    storeScores();
+  $("#highScores").on("click", function () {
+      $('.show-onclick').empty();
+      $('.empty').empty();
+      init()
+      scores();
+  });
+  
+  
+  function scores(){
+    $('.empty').empty();
+    $('.show-onclick').empty();
+    $('.show-onclick').append('<button type="button" class="btn btn-info" id= "clear" style= "float:left;">Clear High Scores</button><button type="button" class="btn btn-info" id= "restart" style= "float:right;">Restart</button>');
+ 
+    $("#restart").click(function () {
+        location.reload();
+        console.log("restart");
+    });
+
+    $("#clear").on("click", function () {
+        console.log("cleared history");
+        highScores = [];
+        storeScores();
+        renderScores();
+    });
     renderScores();
-  });
-  renderScores();
 }
+  
 
-
-function setTimer() {
-  $("#seconds-left").text(secondsLeft);
+function setTimer(){
+  $("#seconds-left").text(timeLeft);
 var countdown = setInterval(function(){
-  secondsLeft--;
-  $("#seconds-left").text(secondsLeft);
-  if (secondsLeft <=0) {
-    clearInterval(countdown);
+  timeLeft--;
+  $("#seconds-left").text(timeLeft);
+  if (timeLeft <=0) {
+      clearInterval(countdown);
   }
 }, 1000);
 }
 
 
 function renderScores() {
-  highScoreList.innerHTML = "";
-
+  scoreList.innerHTML = "";
+  
   for (var i = 0; i < highScores.length; i++) {
     var highScore = highScores[i];
-
+    
+// create list of player scores
     var li = document.createElement("li");
     li.textContent = highScore;
-    highScoreList.append(li);
+    scoreList.append(li);
   }
 }
 
-
 function init() {
+  // Get localStorage
   var storedScoresString = localStorage.getItem("highScores");
+  // Parsing the JSON string to an object
   var storedHighScores = JSON.parse(storedScoresString);
 
-  if(storedHighScores !== null) {
+  if (storedHighScores !== null) {
     highScores = storedHighScores;
   }
   renderScores();
 }
 
-
 function storeScores() {
   var highScoresString = JSON.stringify(highScores);
-
   localStorage.setItem("highScores", highScoresString);
 }
 
 
-
-function correctAnswer() {
+// actions based on users answer
+function correctAnswer(){
   resetRound();
 }
 
-function incorrectAnswer() {
+function incorrectAnswer(){
   resetRound();
   timerDown();
 }
 
-
 function timerStop(){
   $("#timer").remove();
+  
 }
 
-function timerDown() {
-  secondsLeft = secondsLeft -= 9;
+function timerDown(){
+  timeLeft = timeLeft -= 9;
+  
 }
 
 
-
-
+// user submission form for saving data
 function resetRound(){
   $('.answers').empty();
-
   if (indexQandA < questions.length) {
-    loadQandA();
+      loadQandA();
   } else {
-    timerStop();
-    $('.question').remove();
-    $('.show-onclick').append('<div class="form-group"> <label id= "initials" ></label><input class="form-control" id= "input" type="text" name="name" placeholder="Enter initials"></div><button id= "highScoresSubmit" class="btn btn-info">Submit</button>');
-    var score = secondsLeft
-    $("#initials").append("Your score is: " + score);
-    var highScoreForm = document.getElementById("form");
-    highScoreForm.addEventListener("submit", function(event) {
+  timerStop();
+  $('.question').remove();
+  $('.show-onclick').append('<div class="form-group"> <label id= "initials" ></label><input class="form-control" id= "input" type="text" name="name" placeholder="Enter initials"></div><button id= "highScoresSubmit" class="btn btn-info">Submit</button>');
+  var score = timeLeft
+  $("#initials").append("Your score is: " + score);
+  var scoreForm = document.getElementById("form");
+
+  // When form is submitted...
+  scoreForm.addEventListener("submit", function(event) {
       event.preventDefault();
-      var highScoreInput = document.getElementById("input").value;
-      var highScoresText = (highScoreInput + " : " + score);
-      init()
-      scores();
+  var highScoreInput = document.getElementById("input").value;
+  var highScoresText = (highScoreInput + " : " + score);
+  init()
+  scores();
 
-      if (highScoresText === "") {
-        return;
-      }
-
-      highScores.push(highScoresText);
-
-      storeScores();
-      renderScores();
-    });
+  // Return from function early if submitted highScores text is blank
+  if (highScoresText === "") {
+    return;
   }
+  // Add new score to highScores array
+  highScores.push(highScoresText);
+  
+  // Store updated scores in localStorage
+  storeScores();
+  renderScores();
+});
+}
+}
+
+function rightAnswer() {
+  document.getElementById("userAnswer").innerHTML = "Correct!";
+}
+
+function wrongAnswer() {
+  document.getElementById("userAnswer").innerHTML = "Wrong Answer";
 }
 
 
-
-
-
+// displaying answers to questions for user
 function loadQandA() {
   choices = questions[indexQandA].choices;
   var question = questions[indexQandA].title;
@@ -180,21 +188,24 @@ function loadQandA() {
       $('.answers').append('<h4 class= "button-answer" id=' + displayAnswer + '>' + displayAnswer + '</h4><br>');
   }
   
+  // based on users input will change score 
   $("h4").click(function () {
       var id = $(this).attr('id');
-      var answered = questions[indexQandA].answer;
-      if (id == answered) {
-          answer = true;
+      var answer= questions[indexQandA].answer;
+      if (id === answer) {
+          answered = true;
           console.log("correct") 
           indexQandA++;
-          alert("correct!");
           correctAnswer();
+          rightAnswer();
+
       
       } else {
-          answer = false; 
+          answered = true; 
+          console.log("incorrect") 
           indexQandA++;
           incorrectAnswer();
-          // $('.answers').show('<h6 class="alert alert-primary" role="alert">wrong answer!</h6>')
+          wrongAnswer();
       }
   });
 }
