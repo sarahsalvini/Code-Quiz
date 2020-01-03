@@ -1,10 +1,12 @@
 $(document).ready(function(){
 
+
+var indexQandA = 0;
 var questions = [
     {
-      title: "Inside which HTML element do we put the JavaScript?",
-      choices: ["<script>", "<javascript>", "<scripting>", "<js>"],
-      answer: "<script>"
+      title: "Commonly used data types DO NOT include:",
+      choices: ["strings", "booleans", "alerts", "numbers"],
+      answer: "alerts"
     },
     {
       title: "How do you write “Hello World” in an alert box?",
@@ -28,37 +30,88 @@ var questions = [
     },
   ]
 
-var time = 75;
-var indexQandA = 0;
+  var secondsLeft = (questions.length) * 15;
+  var highScoreList = document.querySelector("#high-score");
+  var highScoreForm = document.querySelector(".show-onclick");
 
-$("#startBtn").on("click", function () {
-    $("#startText").remove();
+
+
+
+$("#start").on("click", function () {
+    $('#startText').remove();
     loadQandA();
     setTimer();
 });
 
-function loadQandA() {
-    choices = questions[indexQandA].choices;
-    var question = questions[indexQandA].title;
-    $(".question").html(question);
-    for (var i=0; i < 4; i++) {
-        var answer = questions[indexQandA].choices[i];
-        $(".answers").append('<h4 class= "btn btn-info" id=' + answer + '>' + answer + '</h4><br>');
-    }
+$("#highScores").on("click", function() {
+  console.log("Hello");
+  $('.show.onclick').empty();
+  $('.empty').empty();
+  init()
+  scores();
+});
+
+
+function scores(){
+  $('.empty').empty();
+  $('.show-onclick').empty();
+  $('.show-onclick').append('<button type="button" class="btn btn-info" id= "clear" style = "float:left;">Clear High Scores</button><button type="button" class="btn btn-info" id= "restart" style= "float:right;">Restart</button>');
+  
+  $("#restart").click(function () {
+    location.reload();
+  });
+  
+  $("#clear").on("click", function () {
+    console.log("World");
+    highScores = [];
+    storeScores();
+    renderScores();
+  });
+  renderScores();
 }
 
-$("h4").click(function () {
-  var id = $(this).attr("id");
-  if (id === answer) {
-    answered = true;
-    $(".question").text("Correct");
-    correctAnswer();
-  } else {
-    answered = true; 
-    $(".question").text("Wrong Answer");
-    incorrectAnswer();
+
+function setTimer() {
+  $("#seconds-left").text(secondsLeft);
+var countdown = setInterval(function(){
+  secondsLeft--;
+  $("#seconds-left").text(secondsLeft);
+  if (secondsLeft <=0) {
+    clearInterval(countdown);
   }
-});
+}, 1000);
+}
+
+
+function renderScores() {
+  highScoreList.innerHTML = "";
+
+  for (var i = 0; i < highScores.length; i++) {
+    var highScore = highScores[i];
+
+    var li = document.createElement("li");
+    li.textContent = highScore;
+    highScoreList.append(li);
+  }
+}
+
+
+function init() {
+  var storedScoresString = localStorage.getItem("highScores");
+  var storedHighScores = JSON.parse(storedScoresString);
+
+  if(storedHighScores !== null) {
+    highScores = storedHighScores;
+  }
+  renderScores();
+}
+
+
+function storeScores() {
+  var highScoresString = JSON.stringify(highScores);
+
+  localStorage.setItem("highScores", highScoresString);
+}
 
 
 
@@ -68,32 +121,84 @@ function correctAnswer() {
 
 function incorrectAnswer() {
   resetRound();
-  // lower timer by 10 
+  timerDown();
 }
+
+
+function timerStop(){
+  $("#timer").remove();
+}
+
+function timerDown() {
+  secondsLeft = secondsLeft -= 9;
+}
+
 
 
 
 function resetRound(){
-  indexQandA++;
-  $(".btn-info").remove();
+  $('.answers').empty();
+
   if (indexQandA < questions.length) {
     loadQandA();
   } else {
-    // submit high score button
+    timerStop();
+    $('.question').remove();
+    $('.show-onclick').append('<div class="form-group"> <label id= "initials" ></label><input class="form-control" id= "input" type="text" name="name" placeholder="Enter initials"></div><button id= "highScoresSubmit" class="btn btn-info">Submit</button>');
+    var score = secondsLeft
+    $("#initials").append("Your score is: " + score);
+    var highScoreForm = document.getElementById("form");
+    highScoreForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      var highScoreInput = document.getElementById("input").value;
+      var highScoresText = (highScoreInput + " : " + score);
+      init()
+      scores();
+
+      if (highScoresText === "") {
+        return;
+      }
+
+      highScores.push(highScoresText);
+
+      storeScores();
+      renderScores();
+    });
   }
 }
 
 
-function setTimer() {
-  $("#secondsLeft").text(time);
-var countdown = setInterval(function() {
-  time--;
-  $("#secondsLeft").text(time);
-  if (time <=0) {
-    clearInterval(countdown);
-  }
-}, 1000);
 
+
+
+function loadQandA() {
+  choices = questions[indexQandA].choices;
+  var question = questions[indexQandA].title;
+  $('.question').html(question);
+  for (var i = 0; i < 4; i++) {
+      var displayAnswer = questions[indexQandA].choices[i];
+      $('.answers').append('<h4 class= "button-answer" id=' + displayAnswer + '>' + displayAnswer + '</h4><br>');
+  }
+  
+  $("h4").click(function () {
+      var id = $(this).attr('id');
+      var answered = questions[indexQandA].answer;
+      if (id == answered) {
+          answer = true;
+          console.log("correct") 
+          indexQandA++;
+          alert("correct!");
+          correctAnswer();
+      
+      } else {
+          answer = false; 
+          indexQandA++;
+          incorrectAnswer();
+          // $('.answers').show('<h6 class="alert alert-primary" role="alert">wrong answer!</h6>')
+      }
+  });
 }
+
+
 
 })
