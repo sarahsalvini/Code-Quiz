@@ -3,19 +3,21 @@
   <head>
     <meta charset="UTF-8">
     <title>Code Quiz</title>
-    <link rel="stylesheet" type="text/css" href="assets/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   </head>
   <body>
     <div class="card" style="max-width: 50%; margin: 30px auto; margin-top: 70px;">
-        <div class="card-body">
-          <button type="button" class="btn btn-light" id="highScores" style="float: left;">High Scores</button>
+        <div class="card-body shadow bg-white rounded">
+          <button type="button" class="btn btn-outline-info" id="highScores" style="float: left;">High Scores</button>
           <div class="empty">
-          <button id="timer" style="float: right;">Time Left <span id="seconds-left"></span></button>        
+          <button id="timer" class="btn btn-outline-info" style="float: right;">Time Left <span id="seconds-left"></span></button>        
         </div>
         <br>
         <div class="score">
+          <br>
+          <br>
           <ul id="high-score"></ul>
         </div>
         <form class="show-onclick" id="form">
@@ -24,12 +26,19 @@
         <h2 class="question text-center"></h2>
         <br>
         <div class="answers"></div>
+        <div class="grading"></div>
+        <audio id="pop">
+          <source src="assets/audio/correctAnswer.mp3" type="audio/mp3">
+        </audio>
+        <audio id="pop2">
+          <source src="assets/audio/wrongAnswer.wav" type="audio/wav">
+        </audio>
         <div class="text-center" id="startText">
         <h1 class="card-title">Code Quiz</h1>
         <br>
         <p>Want to test your knowledge of a specific language or topic? Give our coding quiz a try!</p>
         <br>
-          <button type="button" class="btn btn-secondary btn-lg" id="start">Start Code Quiz</button>
+          <button type="button" class="btn btn-info btn-lg" id="start">Start Code Quiz</button>
         </div>
         </div>
       </div>

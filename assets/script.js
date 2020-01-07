@@ -116,11 +116,15 @@ function storeScores() {
 // actions based on users answer
 function correctAnswer(){
   resetRound();
+  $(".grading").empty().append("Correct!");
+  $("audio#pop")[0].play()
 }
 
 function incorrectAnswer(){
   resetRound();
   timerDown();
+  $(".grading").empty().append("Wrong Answer");
+  $("audio#pop2")[0].play()
 }
 
 function timerStop(){
@@ -146,6 +150,8 @@ function resetRound(){
   var score = timeLeft
   $("#initials").append("Your score is: " + score);
   var scoreForm = document.getElementById("form");
+  $(".grading").remove()
+  
 
   // When form is submitted...
   scoreForm.addEventListener("submit", function(event) {
@@ -169,15 +175,6 @@ function resetRound(){
 }
 }
 
-function rightAnswer() {
-  document.getElementById("userAnswer").innerHTML = "Correct!";
-}
-
-function wrongAnswer() {
-  document.getElementById("userAnswer").innerHTML = "Wrong Answer";
-}
-
-
 // displaying answers to questions for user
 function loadQandA() {
   choices = questions[indexQandA].choices;
@@ -185,8 +182,8 @@ function loadQandA() {
   $('.question').html(question);
   for (var i = 0; i < 4; i++) {
       var displayAnswer = questions[indexQandA].choices[i];
-      $('.answers').append('<h4 class= "button-answer" id=' + displayAnswer + '>' + displayAnswer + '</h4><br>');
-  }
+      $('.answers').append('<h4 class="button-answer btn btn-info" id=' + displayAnswer + '>' + displayAnswer + '</h4><br>');
+  }               
   
   // based on users input will change score 
   $("h4").click(function () {
@@ -198,7 +195,6 @@ function loadQandA() {
           indexQandA++;
           correctAnswer();
           rightAnswer();
-
       
       } else {
           answered = true; 
