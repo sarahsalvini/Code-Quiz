@@ -31,7 +31,7 @@ $(document).ready(function(){
 
   var timeLeft = (questions.length) * 15;
   var scoreList = document.querySelector("#high-score");
-  var highScores = ["AAG : 70", "JPG : 54", "KMG : 65"];
+  var highScores = ["NLF : 66", "SES : 10", "SMS : 47"];
   var scoreForm = document.querySelector(".show-onclick");
   
   
