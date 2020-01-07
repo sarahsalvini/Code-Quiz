@@ -1,5 +1,6 @@
 <h1>Unit 04 Web APIs Homework: Code Quiz</h1>
-As you proceed in your career as a web developer, you will probably be asked to complete a coding assessment. These assessments are typically a combination of multiple-choice questions and interactive challenges. In this homework assignment, your challenge is to build a code quiz with multiple-choice questions.
+For this homework we were asked to complete a coding assessment. This assessments is combination of multiple-choice questions and logging the results. 
+
 
 <h2>Instructions</h2>
 From scratch, build a timer-based quiz application that stores high scores client-side. Following the common templates for user stories, we can frame this challenge as follows:
@@ -29,18 +30,6 @@ When time runs out and/or all questions are answered, the user is presented with
 Your application should also be responsive, ensuring that it adapts to multiple screen sizes.
 
 
-Refer to the animated GIF below for a demonstration of the application functionality.
-
-
-
-
-<b>Hints</b>
-
-Store your questions as an array of objects in a separate file, questions.js, that follows this format:
-
-The length of the array in questions.js determines the length of play. Fifteen seconds per question is a good estimate, so 5 questions will result in a length of play of 75 seconds.
-
-
 <b>Minimum Requirements</b>
 
 <ul>
@@ -61,18 +50,9 @@ The length of the array in questions.js determines the length of play. Fifteen s
 <li>After the game ends, the user can save their initials and score to a highscores view using local storage.</li>
 </ul>
 
+<br>
+
+<b>Licenses</b>
 
 
-<b>Bonus</b>
-
-
-Add audio files to alert the user of correct or incorrect answers. Be sure to include the appropriate license.
-
-
-Customize the application theme.
-
-
-Create multiple quizzes and an option for users to choose between them.
-
-
-Add the application to your portfolio.
+Audion files form: https://freesound.org/
